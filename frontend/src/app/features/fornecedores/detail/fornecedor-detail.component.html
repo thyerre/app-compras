@@ -1,0 +1,264 @@
+@if (loading()) {
+  <div class="flex items-center justify-center py-16">
+    <mat-icon class="animate-spin text-gray-400 text-4xl">sync</mat-icon>
+  </div>
+}
+@if (!loading() && fornecedor(); as f) {
+  <div class="fornecedor-detail-page px-4 ">
+    <!-- Header -->
+    <div class="flex flex-row justify-between gap-2 mb-4">
+      <div class="flex items-center gap-3">
+        <button class="text-gray-500 hover:text-gray-700 cursor-pointer bg-transparent border-none" (click)="onBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>
+          <h1 class="text-xl font-semibold text-gray-800 m-0">{{ f.razaoSocial }}</h1>
+          <span class="text-sm text-gray-500">{{ f.cnpjCpf }}</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="px-3 py-1 rounded-full text-xs font-medium"
+              [class]="f.ativo ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
+          {{ f.ativo ? 'Ativo' : 'Inativo' }}
+        </span>
+        <app-button
+          label="Editar"
+          icon="edit"
+          color="primary"
+          variant="raised"
+          (clicked)="onEdit()">
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Dados Principais -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">business</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Principais</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">Razão Social</span>
+          <span class="detail-value">{{ f.razaoSocial || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Nome Fantasia</span>
+          <span class="detail-value">{{ f.nomeFantasia || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">CNPJ/CPF</span>
+          <span class="detail-value">{{ f.cnpjCpf || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Tipo</span>
+          <span class="detail-value">{{ f.tipoFornecedor.descricao || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Classificação</span>
+          <span class="detail-value">{{ f.classificacao.descricao || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Inscrição Estadual</span>
+          <span class="detail-value">{{ f.inscricaoEstadual || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Inscrição Municipal</span>
+          <span class="detail-value">{{ f.inscricaoMunicipal || '—' }}</span>
+        </div>
+        <div class="detail-field sm:col-span-2 lg:col-span-4">
+          <span class="detail-label">Observações</span>
+          <span class="detail-value">{{ f.observacoes || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endereço e Contato -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">location_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Endereço e Contato</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">CEP</span>
+          <span class="detail-value">{{ f.cep || '—' }}</span>
+        </div>
+        <div class="detail-field sm:col-span-2">
+          <span class="detail-label">Logradouro</span>
+          <span class="detail-value">{{ f.logradouro || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Número</span>
+          <span class="detail-value">{{ f.numero || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Complemento</span>
+          <span class="detail-value">{{ f.complemento || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Bairro</span>
+          <span class="detail-value">{{ f.bairro || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Estado</span>
+          <span class="detail-value">{{ f.estado ? f.estado.sigla + ' - ' + f.estado.nome : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Município</span>
+          <span class="detail-value">{{ f.municipio.nome || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Telefone</span>
+          <span class="detail-value">{{ f.telefone || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Celular</span>
+          <span class="detail-value">{{ f.celular || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">E-mail</span>
+          <span class="detail-value">{{ f.email || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Responsável Legal -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">person</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Responsável Legal</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="detail-field sm:col-span-2">
+          <span class="detail-label">Nome</span>
+          <span class="detail-value">{{ f.responsavelNome || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">CPF</span>
+          <span class="detail-value">{{ f.responsavelCpf || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">RG</span>
+          <span class="detail-value">{{ f.responsavelRg || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Cargo</span>
+          <span class="detail-value">{{ f.responsavelCargo || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dados Bancários -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Bancários</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">Banco</span>
+          <span class="detail-value">{{ f.bancoNome || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Agência</span>
+          <span class="detail-value">{{ f.bancoAgencia || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Conta</span>
+          <span class="detail-value">{{ f.bancoConta || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certidões Fiscais -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">description</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Certidões Fiscais</h2>
+      </div>
+      @if (f.certidoes && f.certidoes.length > 0) {
+        @for (certidao of f.certidoes; track certidao.id) {
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div class="detail-field sm:col-span-2">
+              <span class="detail-label">Nome</span>
+              <span class="detail-value">{{ certidao.nome || '—' }}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-label">Número</span>
+              <span class="detail-value">{{ certidao.numero || '—' }}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-label">Emissão</span>
+              <span class="detail-value">{{ certidao.dataEmissao ? (certidao.dataEmissao | date:'dd/MM/yyyy') : '—' }}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-label">Validade</span>
+              <span class="detail-value">{{ certidao.dataValidade ? (certidao.dataValidade | date:'dd/MM/yyyy') : '—' }}</span>
+            </div>
+            <div class="detail-field sm:col-span-2 lg:col-span-3">
+              <span class="detail-label">Observações</span>
+              <span class="detail-value">{{ certidao.observacoes || '—' }}</span>
+            </div>
+          </div>
+          @if (!$last) {
+            <hr class="border-gray-200 my-3">
+          }
+        }
+      } @else {
+        <p class="text-gray-400 italic text-center py-4">Nenhuma certidão cadastrada.</p>
+      }
+    </div>
+
+    <!-- Histórico de Licitações -->
+    @if (f.historicoLicitacoes && f.historicoLicitacoes.length > 0) {
+      <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+        <div class="flex items-center gap-2 mb-4">
+          <mat-icon class="text-gray-500">gavel</mat-icon>
+          <h2 class="text-base font-semibold text-gray-700 m-0">Histórico de Licitações</h2>
+        </div>
+        @for (licitacao of f.historicoLicitacoes; track licitacao.id) {
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div class="detail-field">
+              <span class="detail-label">Nº Processo</span>
+              <span class="detail-value">{{ licitacao.numeroProcesso || '—' }}</span>
+            </div>
+            <div class="detail-field sm:col-span-2">
+              <span class="detail-label">Descrição</span>
+              <span class="detail-value">{{ licitacao.descricao || '—' }}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-label">Data</span>
+              <span class="detail-value">{{ licitacao.dataParticipacao ? (licitacao.dataParticipacao | date:'dd/MM/yyyy') : '—' }}</span>
+            </div>
+            <div class="detail-field">
+              <span class="detail-label">Resultado</span>
+              <span class="detail-value">{{ licitacao.resultado || '—' }}</span>
+            </div>
+          </div>
+          @if (!$last) {
+            <hr class="border-gray-200 my-3">
+          }
+        }
+      </div>
+    }
+
+    <!-- Informações do Sistema -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">info</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Informações do Sistema</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">Criado em</span>
+          <span class="detail-value">{{ f.createdAt ? (f.createdAt | date:'dd/MM/yyyy HH:mm') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Atualizado em</span>
+          <span class="detail-value">{{ f.updatedAt ? (f.updatedAt | date:'dd/MM/yyyy HH:mm') : '—' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,61 @@
+<div class="login-container min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-700 to-primary-900 px-4">
+  <div class="w-full max-w-md">
+    <mat-card class="!rounded-2xl !shadow-2xl">
+      <mat-card-content class="p-6 md:p-10">
+        <!-- Logo / Header -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100 mb-4">
+            <mat-icon class="!text-primary-700 !text-4xl !w-10 !h-10">account_balance</mat-icon>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-800">SIGEC</h1>
+          <p class="text-gray-500 mt-1 text-sm">Sistema de Gestão de Compras</p>
+        </div>
+
+        <!-- Form -->
+        <form (ngSubmit)="onSubmit()" class="space-y-4">
+          <app-input
+            label="E-mail"
+            type="email"
+            placeholder="Digite seu e-mail"
+            prefixIcon="email"
+            [ngModel]="email()"
+            (ngModelChange)="email.set($event)"
+            name="email"
+          />
+
+          <app-input
+            label="Senha"
+            [type]="showPassword() ? 'text' : 'password'"
+            placeholder="Digite sua senha"
+            prefixIcon="lock"
+            [suffixIcon]="showPassword() ? 'visibility_off' : 'visibility'"
+            (suffixIconClick)="showPassword.set(!showPassword())"
+            [ngModel]="senha()"
+            (ngModelChange)="senha.set($event)"
+            name="senha"
+          />
+
+          @if (authState.error()) {
+            <div class="text-red-500 text-sm text-center bg-red-50 p-3 rounded-lg">
+              {{ authState.error() }}
+            </div>
+          }
+
+          <div class="pt-2 flex sm:justify-end justify-center">
+            <app-button
+              label="Entrar"
+              icon="login"
+              variant="flat"
+              type="submit"
+              [disabled]="authState.loading() || !email() || !senha()"
+            />
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <p class="text-center text-white/60 text-xs mt-6">
+      © 2026 SIGEC — Todos os direitos reservados
+    </p>
+  </div>
+</div>

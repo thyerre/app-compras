@@ -1,0 +1,107 @@
+// =============================================
+// Tema de Cores - App Compras
+// =============================================
+
+// Cores Primárias (azul institucional)
+$primary-50:  #e8eaf6;
+$primary-100: #c5cae9;
+$primary-200: #9fa8da;
+$primary-300: #7986cb;
+$primary-400: #5c6bc0;
+$primary-500: #1e3a8a;
+$primary-600: #1a3278;
+$primary-700: #112b72;
+$primary-800: #0d2260;
+$primary-900: #071544;
+
+// Cores de Destaque (accent)
+$accent-50:  #fff8e1;
+$accent-100: #ffecb3;
+$accent-200: #ffe082;
+$accent-300: #ffd54f;
+$accent-400: #ffca28;
+$accent-500: #ffc107;
+$accent-600: #ffb300;
+$accent-700: #ffa000;
+$accent-800: #ff8f00;
+$accent-900: #ff6f00;
+
+// Cores de Sucesso
+$success-50:  #e8f5e9;
+$success-100: #c8e6c9;
+$success-200: #a5d6a7;
+$success-300: #81c784;
+$success-400: #66bb6a;
+$success-500: #22c55e;
+$success-600: #16a34a;
+$success-700: #15803d;
+$success-800: #166534;
+$success-900: #14532d;
+
+// Cores de Alerta
+$warning-50:  #fffbeb;
+$warning-100: #fef3c7;
+$warning-200: #fde68a;
+$warning-300: #fcd34d;
+$warning-400: #fbbf24;
+$warning-500: #f59e0b;
+$warning-600: #d97706;
+$warning-700: #b45309;
+$warning-800: #92400e;
+$warning-900: #78350f;
+
+// Cores de Erro
+$error-50:  #fef2f2;
+$error-100: #fee2e2;
+$error-200: #fecaca;
+$error-300: #fca5a5;
+$error-400: #f87171;
+$error-500: #ef4444;
+$error-600: #dc2626;
+$error-700: #b91c1c;
+$error-800: #991b1b;
+$error-900: #7f1d1d;
+
+// Cores Neutras
+$neutral-50:  #fafafa;
+$neutral-100: #f5f5f5;
+$neutral-200: #e5e5e5;
+$neutral-300: #d4d4d4;
+$neutral-400: #a3a3a3;
+$neutral-500: #737373;
+$neutral-600: #525252;
+$neutral-700: #404040;
+$neutral-800: #262626;
+$neutral-900: #171717;
+
+// Cores de fundo
+$bg-app:       $neutral-50;
+$bg-card:      #ffffff;
+$bg-sidebar:   linear-gradient(180deg, $primary-700, $primary-500);
+$bg-header:    linear-gradient(135deg, $primary-700, $primary-500);
+$bg-login:     linear-gradient(135deg, $primary-700, $primary-500);
+
+// Sidebar
+$sidebar-text:         rgba(255, 255, 255, 0.85);
+$sidebar-text-hover:   #ffffff;
+$sidebar-icon:         rgba(255, 255, 255, 0.7);
+$sidebar-item-hover:   rgba(255, 255, 255, 0.1);
+$sidebar-item-active:  rgba(255, 255, 255, 0.15);
+
+// Cores de texto
+$text-primary:   $neutral-800;
+$text-secondary: $neutral-500;
+$text-disabled:  $neutral-400;
+$text-on-primary: #ffffff;
+$text-on-dark:    #ffffff;
+
+// Bordas
+$border-color:       $neutral-200;
+$border-color-focus: $primary-500;
+
+// Sombras
+$shadow-sm:  0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md:  0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+$shadow-lg:  0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+$shadow-xl:  0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);

@@ -1,0 +1,66 @@
+<div class="form-page px-4 ">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Empenho' : 'Novo Empenho' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">receipt_long</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Nº Empenho" formControlName="numeroEmpenho" [errorMessage]="getError('numeroEmpenho')"></app-input>
+        <app-input label="Exercício" type="number" formControlName="exercicio" [errorMessage]="getError('exercicio')"></app-input>
+        <app-select label="Tipo de Empenho" formControlName="tipoEmpenho" [options]="tipoEmpenhoOptions" [errorMessage]="getError('tipoEmpenho')"></app-select>
+        <app-datepicker label="Data do Empenho" formControlName="dataEmpenho" [errorMessage]="getError('dataEmpenho')"></app-datepicker>
+      </div>
+    </div>
+
+    <!-- Fornecedor e Processo -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">business</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Fornecedor e Processo</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-select label="Fornecedor" formControlName="fornecedorId" [options]="fornecedoresOptions()" [errorMessage]="getError('fornecedorId')"></app-select>
+        <app-input label="Nº Processo (ID)" type="number" formControlName="processoCompraId"></app-input>
+      </div>
+    </div>
+
+    <!-- Descrição e Valores -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">payments</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Descrição e Valores</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="lg:col-span-4 md:col-span-2">
+          <app-input label="Descrição" formControlName="descricao" [errorMessage]="getError('descricao')"></app-input>
+        </div>
+        <app-input label="Valor" type="number" formControlName="valor" [errorMessage]="getError('valor')"></app-input>
+        <app-input label="Valor Anulado" type="number" formControlName="valorAnulado"></app-input>
+        <app-input label="Valor Liquidado" type="number" formControlName="valorLiquidado"></app-input>
+        <app-input label="Valor Pago" type="number" formControlName="valorPago"></app-input>
+        <app-select label="Status" formControlName="status" [options]="statusOptions"></app-select>
+      </div>
+    </div>
+
+    <!-- Observações -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+      </div>
+      <app-input label="Observações" formControlName="observacoes"></app-input>
+    </div>
+
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

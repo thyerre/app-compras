@@ -1,0 +1,79 @@
+<mat-nav-list>
+    @for (menu of menus(); track menu.id) {
+      @if (menu.children && menu.children.length > 0) {
+        <!-- Menu com filhos -->
+        @if (collapsed()) {
+          <!-- Modo colapsado: apenas ícone do pai -->
+          @for (child of menu.children; track child.id) {
+            @if (child.rota) {
+              <a mat-list-item
+                 [routerLink]="child.rota"
+                 routerLinkActive="active-link"
+                 [matTooltip]="child.label"
+                 matTooltipPosition="right"
+                 class="!py-1"
+                 (click)="menuClick.emit()"
+              >
+                <mat-icon matListItemIcon>{{ child.icone }}</mat-icon>
+              </a>
+            }
+          }
+        } @else {
+          <!-- Modo expandido: accordion -->
+          <mat-expansion-panel
+            [class.mat-elevation-z0]="true"
+            class="!bg-transparent !shadow-none"
+            [class.has-active-child]="isChildActive(menu)"
+            [expanded]="isChildActive(menu)"
+          >
+            <mat-expansion-panel-header class="!px-4">
+              <mat-panel-title class="flex items-center gap-3">
+                <mat-icon>{{ menu.icone }}</mat-icon>
+                <span class="text-sm text-white">{{ menu.label }}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            @for (child of menu.children; track child.id) {
+              @if (child.rota) {
+                <a mat-list-item
+                   [routerLink]="child.rota"
+                   routerLinkActive="active-link"
+                   class="!pl-12"
+                   (click)="menuClick.emit()"
+                >
+                  <mat-icon matListItemIcon>{{ child.icone }}</mat-icon>
+                  <span class="text-sm">{{ child.label }}</span>
+                </a>
+              }
+            }
+          </mat-expansion-panel>
+        }
+      } @else {
+        <!-- Menu sem filhos (link direto) -->
+        @if (menu.rota) {
+          @if (collapsed()) {
+            <a mat-list-item
+               [routerLink]="menu.rota"
+               routerLinkActive="active-link"
+               [matTooltip]="menu.label"
+               matTooltipPosition="right"
+               class="!py-1"
+               (click)="menuClick.emit()"
+            >
+              <mat-icon matListItemIcon>{{ menu.icone }}</mat-icon>
+            </a>
+          } @else {
+            <a mat-list-item
+               [routerLink]="menu.rota"
+               routerLinkActive="active-link"
+               class="!py-1"
+               (click)="menuClick.emit()"
+            >
+              <mat-icon matListItemIcon>{{ menu.icone }}</mat-icon>
+              <span class="text-sm">{{ menu.label }}</span>
+            </a>
+          }
+        }
+      }
+    }
+  </mat-nav-list>

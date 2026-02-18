@@ -1,0 +1,57 @@
+@if (variant() === 'raised') {
+  <button
+    mat-raised-button
+    [color]="color()"
+    [disabled]="disabled()"
+    [type]="type()"
+    (click)="clicked.emit($event)"
+    class="w-full"
+  >
+    @if (icon()) {
+      <mat-icon class="mr-1">{{ icon() }}</mat-icon>
+    }
+    {{ label() }}
+  </button>
+} @else if (variant() === 'flat') {
+  <button
+    mat-flat-button
+    [color]="color()"
+    [disabled]="disabled()"
+    [type]="type()"
+    (click)="clicked.emit($event)"
+    class="w-full"
+  >
+    @if (icon()) {
+      <mat-icon class="mr-1">{{ icon() }}</mat-icon>
+    }
+    {{ label() }}
+  </button>
+} @else if (variant() === 'stroked') {
+  <button
+    mat-stroked-button
+    [color]="color()"
+    [disabled]="disabled()"
+    [type]="type()"
+    (click)="clicked.emit($event)"
+    class="w-full"
+  >
+    @if (icon()) {
+      <mat-icon class="mr-1">{{ icon() }}</mat-icon>
+    }
+    {{ label() }}
+  </button>
+} @else {
+  <button
+    mat-button
+    [color]="color()"
+    [disabled]="disabled()"
+    [type]="type()"
+    (click)="clicked.emit($event)"
+    class="w-full"
+  >
+    @if (icon()) {
+      <mat-icon class="mr-1">{{ icon() }}</mat-icon>
+    }
+    {{ label() }}
+  </button>
+}

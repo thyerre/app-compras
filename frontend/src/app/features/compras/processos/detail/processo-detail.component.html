@@ -1,0 +1,178 @@
+@if (loading()) {
+  <div class="flex items-center justify-center py-16">
+    <mat-icon class="animate-spin text-gray-400 text-4xl">sync</mat-icon>
+  </div>
+}
+@if (!loading() && processo(); as p) {
+  <div class="detail-page px-4 ">
+    <!-- Header -->
+    <div class="flex flex-row justify-between gap-2 mb-4">
+      <div class="flex items-center gap-3">
+        <button class="text-gray-500 hover:text-gray-700 cursor-pointer bg-transparent border-none" (click)="onBack()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div>
+          <h1 class="text-xl font-semibold text-gray-800 m-0">Processo {{ p.numeroProcesso }}</h1>
+          <span class="text-sm text-gray-500">Exercício {{ p.exercicio }}</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="px-3 py-1 rounded-full text-xs font-medium"
+              [style.backgroundColor]="p.statusCor + '20'"
+              [style.color]="p.statusCor">
+          {{ p.statusNome }}
+        </span>
+        <app-button label="Editar" icon="edit" color="primary" variant="raised" (clicked)="onEdit()"></app-button>
+      </div>
+    </div>
+
+    <!-- Dados do Processo -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">gavel</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados do Processo</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">Nº Processo</span>
+          <span class="detail-value">{{ p.numeroProcesso || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Exercício</span>
+          <span class="detail-value">{{ p.exercicio || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Modalidade</span>
+          <span class="detail-value">{{ p.modalidadeNome || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Tipo Julgamento</span>
+          <span class="detail-value">{{ p.tipoJulgamentoDescricao || '—' }}</span>
+        </div>
+        <div class="detail-field sm:col-span-2 lg:col-span-4">
+          <span class="detail-label">Objeto</span>
+          <span class="detail-value">{{ p.objeto || '—' }}</span>
+        </div>
+        <div class="detail-field sm:col-span-2 lg:col-span-4">
+          <span class="detail-label">Justificativa</span>
+          <span class="detail-value">{{ p.justificativa || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Órgão</span>
+          <span class="detail-value">{{ p.orgaoNome || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Unidade</span>
+          <span class="detail-value">{{ p.unidadeNome || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Nº Edital</span>
+          <span class="detail-value">{{ p.numeroEdital || '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Dotação</span>
+          <span class="detail-value">{{ p.dotacaoCodigo || '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Valores e Datas -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">event</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Valores e Datas</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">Valor Estimado</span>
+          <span class="detail-value">{{ p.valorEstimado ? (p.valorEstimado | number:'1.2-2':'pt-BR') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Valor Homologado</span>
+          <span class="detail-value">{{ p.valorHomologado ? (p.valorHomologado | number:'1.2-2':'pt-BR') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Data Abertura</span>
+          <span class="detail-value">{{ p.dataAbertura ? (p.dataAbertura | date:'dd/MM/yyyy') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Data Encerramento</span>
+          <span class="detail-value">{{ p.dataEncerramento ? (p.dataEncerramento | date:'dd/MM/yyyy') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Data Homologação</span>
+          <span class="detail-value">{{ p.dataHomologacao ? (p.dataHomologacao | date:'dd/MM/yyyy') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Data Publicação</span>
+          <span class="detail-value">{{ p.dataPublicacao ? (p.dataPublicacao | date:'dd/MM/yyyy') : '—' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Itens -->
+    @if (p.itens && p.itens.length > 0) {
+      <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+        <div class="flex items-center gap-2 mb-4">
+          <mat-icon class="text-gray-500">list_alt</mat-icon>
+          <h2 class="text-base font-semibold text-gray-700 m-0">Itens do Processo</h2>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-200">
+                <th class="text-left py-2 px-2 text-gray-500 font-medium">Nº</th>
+                <th class="text-left py-2 px-2 text-gray-500 font-medium">Descrição</th>
+                <th class="text-left py-2 px-2 text-gray-500 font-medium">Unidade</th>
+                <th class="text-right py-2 px-2 text-gray-500 font-medium">Qtd</th>
+                <th class="text-right py-2 px-2 text-gray-500 font-medium">Valor Unit.</th>
+                <th class="text-right py-2 px-2 text-gray-500 font-medium">Valor Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (item of p.itens; track item.id) {
+                <tr class="border-b border-gray-100">
+                  <td class="py-2 px-2">{{ item.numeroItem }}</td>
+                  <td class="py-2 px-2">{{ item.descricao }}</td>
+                  <td class="py-2 px-2">{{ item.unidade || '—' }}</td>
+                  <td class="py-2 px-2 text-right">{{ item.quantidade || '—' }}</td>
+                  <td class="py-2 px-2 text-right">{{ item.valorUnitarioEstimado ? (item.valorUnitarioEstimado | number:'1.2-2':'pt-BR') : '—' }}</td>
+                  <td class="py-2 px-2 text-right">{{ item.valorTotalEstimado ? (item.valorTotalEstimado | number:'1.2-2':'pt-BR') : '—' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <!-- Observações -->
+    @if (p.observacoes) {
+      <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+        <div class="flex items-center gap-2 mb-4">
+          <mat-icon class="text-gray-500">notes</mat-icon>
+          <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+        </div>
+        <p class="text-sm text-gray-700">{{ p.observacoes }}</p>
+      </div>
+    }
+
+    <!-- Informações do Sistema -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5 mb-4">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">info</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Informações do Sistema</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="detail-field">
+          <span class="detail-label">Criado em</span>
+          <span class="detail-value">{{ p.createdAt ? (p.createdAt | date:'dd/MM/yyyy HH:mm') : '—' }}</span>
+        </div>
+        <div class="detail-field">
+          <span class="detail-label">Atualizado em</span>
+          <span class="detail-value">{{ p.updatedAt ? (p.updatedAt | date:'dd/MM/yyyy HH:mm') : '—' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+}

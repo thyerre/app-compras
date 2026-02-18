@@ -1,0 +1,57 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+mat-sidenav-container {
+  flex: 1;
+}
+
+mat-sidenav {
+  transition: width 0.3s ease;
+  background: linear-gradient(180deg, #112b72, #1e3a8a) !important;
+  border-radius: 0 !important;
+}
+
+// Force sidenav widths since Tailwind classes may not apply
+::ng-deep {
+  .mat-drawer-container {
+    height: 100%;
+  }
+
+  .mat-drawer {
+    border-radius: 0 !important;
+  }
+
+  // Sidenav expanded
+  .sidenav-expanded {
+    width: 256px !important;
+    min-width: 256px !important;
+  }
+
+  // Sidenav collapsed (icon only)
+  .sidenav-collapsed {
+    width: 64px !important;
+    min-width: 64px !important;
+  }
+
+  // Mobile: sidenav must appear ABOVE the header (z-50 = 50)
+  .mat-drawer.mat-drawer-over {
+    position: fixed !important;
+    top: 0 !important;
+    height: 100vh !important;
+    z-index: 100 !important;
+  }
+
+  // Backdrop must be above header but below sidenav
+  .mat-drawer-backdrop.mat-drawer-shown {
+    z-index: 99 !important;
+  }
+}

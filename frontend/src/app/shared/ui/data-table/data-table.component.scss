@@ -1,0 +1,71 @@
+:host {
+  height: 100%;
+}
+.data-table-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.table-wrapper {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+table {
+  width: 100%;
+}
+
+.table-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+}
+
+th.mat-mdc-header-cell {
+  font-weight: 600;
+  font-size: 13px;
+  color: #334155;
+  background-color: #f8fafc;
+  white-space: nowrap;
+}
+
+td.mat-mdc-cell {
+  font-size: 13px;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  color: #94a3b8;
+  gap: 8px;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  span {
+    font-size: 14px;
+  }
+}
+
+mat-paginator {
+  border-top: 1px solid #e2e8f0;
+}

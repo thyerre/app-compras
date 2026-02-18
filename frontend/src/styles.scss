@@ -1,0 +1,98 @@
+@use 'app/styles/theme' as theme;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: theme.$bg-app;
+}
+
+// Estilos globais para Angular Material
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: #22c55e;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+
+  &.snackbar-error {
+    --mdc-snackbar-container-color: #ef4444;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+  &.snackbar-success {
+    --mdc-snackbar-container-color: #22c55e;
+    --mdc-snackbar-supporting-text-color: #ffffff;
+  }
+}
+
+// Densidade compacta para form-fields
+.mat-mdc-form-field {
+  // Altura e padding do container
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 4px;
+
+  // Filled
+  --mdc-filled-text-field-container-shape: 4px;
+  --mdc-filled-text-field-active-indicator-height: 1px;
+  --mdc-filled-text-field-focus-active-indicator-height: 2px;
+  --mdc-filled-text-field-label-text-size: 14px;
+  --mdc-filled-text-field-input-text-size: 14px;
+  --mat-form-field-filled-with-label-container-padding-top: 16px;
+  --mat-form-field-filled-with-label-container-padding-bottom: 0px;
+
+  // Outlined
+  --mdc-outlined-text-field-container-shape: 4px;
+  --mdc-outlined-text-field-outline-width: 1px;
+  --mdc-outlined-text-field-focus-outline-width: 2px;
+  --mdc-outlined-text-field-label-text-size: 14px;
+  --mdc-outlined-text-field-input-text-size: 14px;
+
+  input.mat-mdc-input-element {
+    font-size: 14px;
+  }
+
+  .mat-mdc-select-value {
+    font-size: 14px;
+  }
+}
+
+// Outline vermelho em campos inválidos (após touch/submit)
+.mat-mdc-form-field.mat-form-field-invalid {
+  .mdc-text-field--filled {
+    border: 1.5px solid #ef4444 !important;
+    border-radius: 4px;
+  }
+
+  .mdc-text-field--outlined {
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: #ef4444 !important;
+    }
+  }
+}
+
+// Remove o height extra de 16px do subscript-wrapper
+.mat-mdc-form-field-subscript-wrapper {
+  &::before {
+    height: 0 !important;
+    display: none !important;
+  }
+}
+
+.mat-mdc-form-field-bottom-align::before {
+  height: 0 !important;
+  display: none !important;
+}
+
+// Full height layout
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}

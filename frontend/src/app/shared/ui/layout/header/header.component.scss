@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+mat-toolbar {
+  background: linear-gradient(135deg, #112b72, #1e3a8a) !important;
+  color: #ffffff !important;
+
+  .mat-mdc-icon-button {
+    color: #ffffff !important;
+  }
+}

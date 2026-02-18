@@ -1,0 +1,78 @@
+<div class="form-page px-4 ">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Dotação' : 'Cadastrar Dotação Orçamentária' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance_wallet</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Exercício" type="number" formControlName="exercicio" [errorMessage]="getError('exercicio')"></app-input>
+        <div class="lg:col-span-2">
+          <app-input label="Código da Dotação" formControlName="codigoDotacao" [errorMessage]="getError('codigoDotacao')"></app-input>
+        </div>
+      </div>
+    </div>
+
+    <!-- Classificação Institucional -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">domain</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Classificação Institucional</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-select label="Órgão" formControlName="orgaoId" [options]="orgaosOptions()" [errorMessage]="getError('orgaoId')" (valueChange)="onOrgaoChange($event)"></app-select>
+        <app-select label="Unidade" formControlName="unidadeId" [options]="unidadesOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Classificação Funcional-Programática -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">category</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Classificação Funcional-Programática</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-select label="Função" formControlName="funcaoId" [options]="funcoesOptions()" [errorMessage]="getError('funcaoId')" (valueChange)="onFuncaoChange($event)"></app-select>
+        <app-select label="Subfunção" formControlName="subfuncaoId" [options]="subfuncoesOptions()"></app-select>
+        <app-select label="Programa" formControlName="programaId" [options]="programasOptions()" [errorMessage]="getError('programaId')"></app-select>
+      </div>
+    </div>
+
+    <!-- Classificação da Despesa -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">monetization_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Classificação da Despesa</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-select label="Natureza da Despesa" formControlName="naturezaDespesaId" [options]="naturezasOptions()" [errorMessage]="getError('naturezaDespesaId')"></app-select>
+        <app-select label="Fonte de Recurso" formControlName="fonteRecursoId" [options]="fontesOptions()" [errorMessage]="getError('fonteRecursoId')"></app-select>
+      </div>
+    </div>
+
+    <!-- Valores -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">payments</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Valores</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Valor Inicial" type="number" formControlName="valorInicial" [errorMessage]="getError('valorInicial')"></app-input>
+        <app-input label="Valor Suplementado" type="number" formControlName="valorSuplementado"></app-input>
+        <app-input label="Valor Anulado" type="number" formControlName="valorAnulado"></app-input>
+        <app-input label="Valor Empenhado" type="number" formControlName="valorEmpenhado"></app-input>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

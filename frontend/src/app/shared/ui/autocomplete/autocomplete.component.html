@@ -1,0 +1,26 @@
+<mat-form-field class="w-full" [appearance]="appearance()" subscriptSizing="dynamic">
+  @if (label()) {
+    <mat-label>{{ label() }}</mat-label>
+  }
+  <input
+    matInput
+    [matAutocomplete]="auto"
+    [placeholder]="placeholder()"
+    [value]="displayValue()"
+    [disabled]="disabled()"
+    (input)="onInput($event)"
+    (blur)="onTouched()"
+  />
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="onOptionSelected($event.option.value)"
+    [displayWith]="displayFn.bind(this)"
+  >
+    @for (option of filteredOptions(); track option.value) {
+      <mat-option [value]="option.value">{{ option.label }}</mat-option>
+    }
+  </mat-autocomplete>
+  @if (errorMessage()) {
+    <mat-error>{{ errorMessage() }}</mat-error>
+  }
+</mat-form-field>

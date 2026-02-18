@@ -1,0 +1,37 @@
+<div class="form-page px-4 ">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Receita' : 'Cadastrar Receita Prevista' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">trending_up</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados da Receita</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Exercício" type="number" formControlName="exercicio" [errorMessage]="getError('exercicio')"></app-input>
+        <app-input label="Código da Receita" formControlName="codigoReceita" [errorMessage]="getError('codigoReceita')"></app-input>
+        <div class="lg:col-span-2">
+          <app-select label="Categoria" formControlName="categoria" [options]="categoriasOptions"></app-select>
+        </div>
+        <div class="lg:col-span-4 md:col-span-2">
+          <app-input label="Descrição" formControlName="descricao" [errorMessage]="getError('descricao')"></app-input>
+        </div>
+        <div class="lg:col-span-2">
+          <app-select label="Fonte de Recurso" formControlName="fonteRecursoId" [options]="fontesOptions()"></app-select>
+        </div>
+        <div class="lg:col-span-2">
+          <app-select label="LOA" formControlName="loaId" [options]="loasOptions()" [errorMessage]="getError('loaId')"></app-select>
+        </div>
+        <app-input label="Valor Previsto" type="number" formControlName="valorPrevisto" [errorMessage]="getError('valorPrevisto')"></app-input>
+        <app-input label="Valor Arrecadado" type="number" formControlName="valorArrecadado"></app-input>
+      </div>
+    </div>
+
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

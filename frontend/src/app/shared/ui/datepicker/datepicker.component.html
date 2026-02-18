@@ -1,0 +1,22 @@
+<mat-form-field class="w-full" [appearance]="appearance()" subscriptSizing="dynamic">
+  @if (label()) {
+    <mat-label>{{ label() }}</mat-label>
+  }
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [value]="value()"
+    [disabled]="disabled()"
+    [placeholder]="placeholder()"
+    [min]="minDate()"
+    [max]="maxDate()"
+    [errorStateMatcher]="errorMatcher()"
+    (dateChange)="onDateChange($event.value)"
+    (blur)="onTouched()"
+  />
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  @if (errorMessage()) {
+    <mat-error>{{ errorMessage() }}</mat-error>
+  }
+</mat-form-field>

@@ -1,0 +1,154 @@
+﻿<div class="fornecedor-form-page px-4 ">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Fornecedor' : 'Cadastrar Fornecedor' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+    <!-- Dados Principais -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">business</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Principais</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="lg:col-span-2">
+          <app-input label="Razão Social" formControlName="razaoSocial"
+            [errorMessage]="getError('razaoSocial')"></app-input>
+        </div>
+        <app-input label="Nome Fantasia" formControlName="nomeFantasia"></app-input>
+        <app-input label="CNPJ/CPF" formControlName="cnpjCpf"
+          [errorMessage]="getError('cnpjCpf')"></app-input>
+        <app-select label="Tipo" formControlName="tipoFornecedorId"
+          [options]="tiposFornecedorOptions()"
+          [errorMessage]="getError('tipoFornecedorId')"></app-select>
+        <app-select label="Classificação" formControlName="classificacaoId"
+          [options]="classificacoesOptions()"></app-select>
+        <app-input label="Inscrição Estadual" formControlName="inscricaoEstadual"></app-input>
+        <app-input label="Inscrição Municipal" formControlName="inscricaoMunicipal"></app-input>
+        <div class="flex items-center py-2">
+          <mat-checkbox formControlName="ativo">Fornecedor ativo</mat-checkbox>
+        </div>
+        <div class="lg:col-span-4 md:col-span-2">
+          <app-input label="Observações" formControlName="observacoes"></app-input>
+        </div>
+      </div>
+    </div>
+
+    <!-- Endereço e Contato -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">location_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Endereço e Contato</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="CEP" formControlName="cep"
+          [errorMessage]="getError('cep')"></app-input>
+        <div class="lg:col-span-2">
+          <app-input label="Logradouro" formControlName="logradouro"
+            [errorMessage]="getError('logradouro')"></app-input>
+        </div>
+        <app-input label="Número" formControlName="numero"
+          [errorMessage]="getError('numero')"></app-input>
+        <app-input label="Complemento" formControlName="complemento"></app-input>
+        <app-input label="Bairro" formControlName="bairro"
+          [errorMessage]="getError('bairro')"></app-input>
+        <app-select label="Estado" formControlName="estadoId"
+          [options]="estadosOptions()"
+          [errorMessage]="getError('estadoId')"
+          (valueChange)="onEstadoChange($event)"></app-select>
+        <app-select label="Município" formControlName="municipioId"
+          [options]="municipiosOptions()"
+          [errorMessage]="getError('municipioId')"></app-select>
+        <app-input label="Telefone" formControlName="telefone"></app-input>
+        <app-input label="Celular" formControlName="celular"></app-input>
+        <app-input label="E-mail" type="email" formControlName="email"></app-input>
+      </div>
+    </div>
+
+    <!-- Responsável Legal -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">person</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Responsável Legal</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="lg:col-span-2">
+          <app-input label="Nome do Responsável" formControlName="responsavelNome"></app-input>
+        </div>
+        <app-input label="CPF do Responsável" formControlName="responsavelCpf"></app-input>
+        <app-input label="RG do Responsável" formControlName="responsavelRg"></app-input>
+        <app-input label="Cargo do Responsável" formControlName="responsavelCargo"></app-input>
+      </div>
+    </div>
+
+    <!-- Dados Bancários -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Bancários</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Banco" formControlName="bancoNome"></app-input>
+        <app-input label="Agência" formControlName="bancoAgencia"></app-input>
+        <app-input label="Conta" formControlName="bancoConta"></app-input>
+      </div>
+    </div>
+
+    <!-- Certidões Fiscais -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <mat-icon class="text-gray-500">description</mat-icon>
+          <h2 class="text-base font-semibold text-gray-700 m-0">Certidões Fiscais</h2>
+        </div>
+        <button mat-icon-button color="primary" type="button" (click)="addCertidao()">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+      @if (certidoes.length === 0) {
+        <p class="text-gray-400 italic text-center py-4">Nenhuma certidão cadastrada. Clique no botão + para adicionar.</p>
+      }
+      @for (certidao of certidoes.controls; track $index; let i = $index) {
+        <div class="mb-4" [formGroupName]="'certidoes'">
+          <div [formGroupName]="i" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start">
+            <div class="lg:col-span-2">
+              <app-input label="Nome da Certidão" formControlName="nome"></app-input>
+            </div>
+            <app-input label="Número" formControlName="numero"></app-input>
+            <app-datepicker label="Data de Emissão" formControlName="dataEmissao"></app-datepicker>
+            <app-datepicker label="Data de Validade" formControlName="dataValidade"></app-datepicker>
+            <div class="lg:col-span-2">
+              <app-input label="Observações" formControlName="observacoes"></app-input>
+            </div>
+            <div class="flex items-center justify-center pt-2">
+              <button mat-icon-button color="warn" type="button" (click)="removeCertidao(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+          @if (!$last) {
+            <mat-divider class="my-3"></mat-divider>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button
+        label="Cancelar"
+        variant="stroked"
+        type="button"
+        (clicked)="onCancel()">
+      </app-button>
+      <app-button
+        label="Salvar"
+        variant="raised"
+        color="primary"
+        type="submit"
+        [disabled]="saving()">
+      </app-button>
+    </div>
+  </form>
+</div>

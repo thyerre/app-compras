@@ -1,0 +1,31 @@
+<div class="app-container">
+  <app-header
+    [userName]="authState.userName()"
+    [isMobile]="isMobile()"
+    (toggleMenu)="onToggleMenu()"
+    (logout)="authState.logout()"
+  />
+
+  <mat-sidenav-container class="flex-1">
+    <mat-sidenav
+      #sidenav
+      [mode]="isMobile() ? 'over' : 'side'"
+      [opened]="!isMobile()"
+      class="!border-r-0"
+      [class.sidenav-expanded]="!isCollapsed()"
+      [class.sidenav-collapsed]="isCollapsed()"
+    >
+      <app-sidenav
+        [menus]="menus()"
+        [collapsed]="isCollapsed()"
+        (menuClick)="onMenuClick()"
+      />
+    </mat-sidenav>
+
+    <mat-sidenav-content class="bg-gray-50">
+      <div class="p-4 h-full">
+        <router-outlet />
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

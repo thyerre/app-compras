@@ -1,0 +1,23 @@
+.fornecedor-detail-page {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.detail-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.detail-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: #1e293b;
+}
