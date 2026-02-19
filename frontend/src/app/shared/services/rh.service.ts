@@ -13,6 +13,7 @@ import {
     HistoricoFuncionalListItem, HistoricoFuncionalRequest, HistoricoFuncionalResponse,
     LicencaListItem, LicencaRequest, LicencaResponse,
     NivelSalarialListItem, NivelSalarialRequest, NivelSalarialResponse,
+    RoleItem,
     ServidorListItem, ServidorRequest, ServidorResponse,
     TipoVinculo,
 } from '../../core/models/rh.model';
@@ -59,6 +60,9 @@ export class RhService {
   }
   deleteServidor(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/servidores/${id}`);
+  }
+  findRoles(): Observable<RoleItem[]> {
+    return this.http.get<RoleItem[]>(`${this.apiUrl}/servidores/roles`);
   }
 
   // ========================

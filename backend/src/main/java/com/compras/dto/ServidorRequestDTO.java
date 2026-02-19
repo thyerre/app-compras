@@ -2,7 +2,7 @@ package com.compras.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -151,6 +151,7 @@ public class ServidorRequestDTO {
     private Boolean ativo;
     private String observacoes;
 
-    // Credenciais para criar usuário vinculado
+    // Credenciais para criar/atualizar usuário vinculado
     private String senhaUsuario;
+    private List<String> roleNames;
 }

@@ -2,6 +2,7 @@ package com.compras.dto;
 
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +14,9 @@ public class ServidorResponseDTO {
     private String matricula;
     private Long usuarioId;
     private String usuarioEmail;
+    private String usuarioNome;
+    private Boolean usuarioAtivo;
+    private List<String> roles;
     private String nome;
     private String cpf;
     private String rg;

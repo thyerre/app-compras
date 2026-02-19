@@ -1,5 +1,6 @@
 package com.compras.controller;
 
+import com.compras.dto.RoleDTO;
 import com.compras.dto.ServidorListDTO;
 import com.compras.dto.ServidorRequestDTO;
 import com.compras.dto.ServidorResponseDTO;
@@ -13,6 +14,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/rh/servidores")
@@ -32,7 +35,12 @@ public class ServidorController {
         return ResponseEntity.ok(servidorService.findAll(nome, matricula, cpf, situacao, cargoId, pageable));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/roles")
+    public ResponseEntity<List<RoleDTO>> findAllRoles() {
+        return ResponseEntity.ok(servidorService.findAllRoles());
+    }
+
+    @GetMapping("/{id:\\d+}")
     public ResponseEntity<ServidorResponseDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(servidorService.findById(id));
     }
@@ -42,13 +50,13 @@ public class ServidorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(servidorService.create(dto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id:\\d+}")
     public ResponseEntity<ServidorResponseDTO> update(
             @PathVariable Long id, @Valid @RequestBody ServidorRequestDTO dto) {
         return ResponseEntity.ok(servidorService.update(id, dto));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id:\\d+}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         servidorService.delete(id);
         return ResponseEntity.noContent().build();

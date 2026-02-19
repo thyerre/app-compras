@@ -10,13 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -30,6 +29,9 @@ public class ServidorService {
     private final TipoVinculoRepository tipoVinculoRepository;
     private final MunicipioRepository municipioRepository;
     private final EstadoRepository estadoRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public Page<ServidorListDTO> findAll(String nome, String matricula, String cpf,
@@ -81,6 +83,7 @@ public class ServidorService {
         validateMatriculaUnique(dto.getMatricula(), null);
         validateCpfUnique(dto.getCpf(), null);
         Servidor s = toEntity(dto);
+        handleUsuario(s, dto);
         s = servidorRepository.save(s);
         return toResponseDTO(s);
     }
@@ -92,6 +95,7 @@ public class ServidorService {
         validateMatriculaUnique(dto.getMatricula(), id);
         validateCpfUnique(dto.getCpf(), id);
         updateEntity(s, dto);
+        handleUsuario(s, dto);
         s = servidorRepository.save(s);
         return toResponseDTO(s);
     }
@@ -136,7 +140,7 @@ public class ServidorService {
     }
 
     private ServidorResponseDTO toResponseDTO(Servidor s) {
-        return ServidorResponseDTO.builder()
+        ServidorResponseDTO.ServidorResponseDTOBuilder builder = ServidorResponseDTO.builder()
                 .id(s.getId())
                 .matricula(s.getMatricula())
                 .nome(s.getNome())
@@ -182,14 +186,127 @@ public class ServidorService {
                 .ativo(s.getAtivo())
                 .observacoes(s.getObservacoes())
                 .createdAt(s.getCreatedAt())
-                .updatedAt(s.getUpdatedAt())
-                .build();
+                .updatedAt(s.getUpdatedAt());
+
+        // Dados do usuário vinculado (sem senha)
+        if (s.getUsuario() != null) {
+            Usuario u = s.getUsuario();
+            builder.usuarioId(u.getId())
+                    .usuarioEmail(u.getEmail())
+                    .usuarioNome(u.getNome())
+                    .usuarioAtivo(u.getAtivo())
+                    .roles(u.getRoles().stream()
+                            .map(Role::getNome)
+                            .sorted()
+                            .collect(Collectors.toList()));
+        } else {
+            builder.roles(Collections.emptyList());
+        }
+
+        return builder.build();
     }
 
     private Servidor toEntity(ServidorRequestDTO dto) {
         Servidor s = new Servidor();
         updateEntity(s, dto);
         return s;
+    }
+
+    private void handleUsuario(Servidor s, ServidorRequestDTO dto) {
+        boolean hasPassword = dto.getSenhaUsuario() != null && !dto.getSenhaUsuario().isBlank();
+        boolean hasRoles = dto.getRoleNames() != null && !dto.getRoleNames().isEmpty();
+
+        // Se não informou senha nem roles e não tem usuário, não faz nada
+        if (!hasPassword && !hasRoles && s.getUsuario() == null) {
+            return;
+        }
+
+        String emailUsuario = dto.getEmail();
+        if (emailUsuario == null || emailUsuario.isBlank()) {
+            throw new BusinessException("ME_SERVIDOR_EMAIL_REQUIRED",
+                    "O e-mail do servidor é obrigatório para criar acesso ao sistema");
+        }
+
+        if (s.getUsuario() == null) {
+            // Criar novo usuário
+            if (!hasPassword) {
+                throw new BusinessException("ME_SERVIDOR_SENHA_REQUIRED",
+                        "A senha é obrigatória para criar um novo acesso ao sistema");
+            }
+
+            // Verificar se já existe usuário com esse e-mail
+            Optional<Usuario> existente = usuarioRepository.findByEmail(emailUsuario);
+            if (existente.isPresent()) {
+                throw new BusinessException("ME_SERVIDOR_EMAIL_DUPLICATE",
+                        "Já existe um usuário com este e-mail");
+            }
+
+            Usuario usuario = Usuario.builder()
+                    .nome(dto.getNome())
+                    .email(emailUsuario)
+                    .senha(passwordEncoder.encode(dto.getSenhaUsuario()))
+                    .ativo(true)
+                    .build();
+
+            if (hasRoles) {
+                usuario.setRoles(resolveRoles(dto.getRoleNames()));
+            } else {
+                // Role padrão
+                roleRepository.findByNome("USUARIO").ifPresent(r -> {
+                    Set<Role> defaultRoles = new HashSet<>();
+                    defaultRoles.add(r);
+                    usuario.setRoles(defaultRoles);
+                });
+            }
+
+            Usuario savedUsuario = usuarioRepository.save(usuario);
+            s.setUsuario(savedUsuario);
+        } else {
+            // Atualizar usuário existente
+            Usuario usuario = s.getUsuario();
+            usuario.setNome(dto.getNome());
+
+            // Se mudou o e-mail, verificar unicidade
+            if (!usuario.getEmail().equals(emailUsuario)) {
+                Optional<Usuario> existente = usuarioRepository.findByEmail(emailUsuario);
+                if (existente.isPresent()) {
+                    throw new BusinessException("ME_SERVIDOR_EMAIL_DUPLICATE",
+                            "Já existe um usuário com este e-mail");
+                }
+                usuario.setEmail(emailUsuario);
+            }
+
+            // Atualizar senha somente se informada
+            if (hasPassword) {
+                usuario.setSenha(passwordEncoder.encode(dto.getSenhaUsuario()));
+            }
+
+            // Atualizar roles se informadas
+            if (hasRoles) {
+                usuario.setRoles(resolveRoles(dto.getRoleNames()));
+            }
+
+            usuarioRepository.save(usuario);
+        }
+    }
+
+    private Set<Role> resolveRoles(List<String> roleNames) {
+        Set<Role> roles = new HashSet<>();
+        for (String roleName : roleNames) {
+            Role role = roleRepository.findByNome(roleName)
+                    .orElseThrow(() -> new BusinessException("ME_ROLE_NOT_FOUND",
+                            "Permissão não encontrada: " + roleName));
+            roles.add(role);
+        }
+        return roles;
+    }
+
+    @Transactional(readOnly = true)
+    public List<RoleDTO> findAllRoles() {
+        return roleRepository.findAll().stream()
+                .filter(Role::getAtivo)
+                .map(r -> new RoleDTO(r.getId(), r.getNome(), r.getDescricao()))
+                .collect(Collectors.toList());
     }
 
     private void updateEntity(Servidor s, ServidorRequestDTO dto) {

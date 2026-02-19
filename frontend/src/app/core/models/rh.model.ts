@@ -109,12 +109,24 @@ export interface ServidorRequest {
   ativo?: boolean;
   observacoes?: string;
   senhaUsuario?: string;
+  roleNames?: string[];
 }
 
 export interface ServidorResponse extends ServidorRequest {
   id: number;
+  usuarioId?: number;
+  usuarioEmail?: string;
+  usuarioNome?: string;
+  usuarioAtivo?: boolean;
+  roles?: string[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface RoleItem {
+  id: number;
+  nome: string;
+  descricao: string;
 }
 
 // ── Folha de Pagamento ──────────────────────────────────
