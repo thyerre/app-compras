@@ -250,6 +250,27 @@ export const routes: Routes = [
       // Folhas de Pagamento
       { path: 'rh/folhas-pagamento', loadComponent: () => import('./features/rh/folhas-pagamento/list/folha-pagamento-list.component').then(m => m.FolhaPagamentoListComponent) },
       { path: 'rh/folhas-pagamento/:id', loadComponent: () => import('./features/rh/folhas-pagamento/form/folha-pagamento-form.component').then(m => m.FolhaPagamentoFormComponent) },
+      // Níveis Salariais
+      { path: 'rh/niveis-salariais', loadComponent: () => import('./features/rh/niveis-salariais/list/nivel-salarial-list.component').then(m => m.NivelSalarialListComponent) },
+      { path: 'rh/niveis-salariais/:id', loadComponent: () => import('./features/rh/niveis-salariais/form/nivel-salarial-form.component').then(m => m.NivelSalarialFormComponent) },
+      // Dependentes
+      { path: 'rh/dependentes', loadComponent: () => import('./features/rh/dependentes/list/dependente-list.component').then(m => m.DependenteListComponent) },
+      { path: 'rh/dependentes/:id', loadComponent: () => import('./features/rh/dependentes/form/dependente-form.component').then(m => m.DependenteFormComponent) },
+      // Eventos de Folha
+      { path: 'rh/eventos-folha', loadComponent: () => import('./features/rh/eventos-folha/list/evento-folha-list.component').then(m => m.EventoFolhaListComponent) },
+      { path: 'rh/eventos-folha/:id', loadComponent: () => import('./features/rh/eventos-folha/form/evento-folha-form.component').then(m => m.EventoFolhaFormComponent) },
+      // Férias
+      { path: 'rh/ferias', loadComponent: () => import('./features/rh/ferias/list/ferias-list.component').then(m => m.FeriasListComponent) },
+      { path: 'rh/ferias/:id', loadComponent: () => import('./features/rh/ferias/form/ferias-form.component').then(m => m.FeriasFormComponent) },
+      // Licenças
+      { path: 'rh/licencas', loadComponent: () => import('./features/rh/licencas/list/licenca-list.component').then(m => m.LicencaListComponent) },
+      { path: 'rh/licencas/:id', loadComponent: () => import('./features/rh/licencas/form/licenca-form.component').then(m => m.LicencaFormComponent) },
+      // Histórico Funcional
+      { path: 'rh/historico-funcional', loadComponent: () => import('./features/rh/historico-funcional/list/historico-funcional-list.component').then(m => m.HistoricoFuncionalListComponent) },
+      { path: 'rh/historico-funcional/:id', loadComponent: () => import('./features/rh/historico-funcional/form/historico-funcional-form.component').then(m => m.HistoricoFuncionalFormComponent) },
+      // Consignados
+      { path: 'rh/consignados', loadComponent: () => import('./features/rh/consignados/list/consignado-list.component').then(m => m.ConsignadoListComponent) },
+      { path: 'rh/consignados/:id', loadComponent: () => import('./features/rh/consignados/form/consignado-form.component').then(m => m.ConsignadoFormComponent) },
 
       {
         path: '',

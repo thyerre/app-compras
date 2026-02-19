@@ -1,0 +1,47 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Consignado' : 'Novo Consignado' }}</h1>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados do Consignado</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Servidor" formControlName="servidorId" [options]="servidorOptions()" class="lg:col-span-2"></app-select>
+        <app-select label="Evento de Folha" formControlName="eventoFolhaId" [options]="eventoFolhaOptions()" class="lg:col-span-2"></app-select>
+        <app-input label="Consignatária" formControlName="consignataria" class="lg:col-span-2"></app-input>
+        <app-input label="Contrato" formControlName="contrato"></app-input>
+        <app-select label="Status" formControlName="status" [options]="statusOptions()"></app-select>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">payments</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Valores e Parcelas</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Parcela Atual" formControlName="parcelaAtual" type="number"></app-input>
+        <app-input label="Total de Parcelas" formControlName="parcelaTotal" type="number"></app-input>
+        <app-input label="Valor da Parcela" formControlName="valorParcela" type="number"></app-input>
+        <app-input label="Valor Total" formControlName="valorTotal" type="number"></app-input>
+        <app-input label="Data Início" formControlName="dataInicio" type="date"></app-input>
+        <app-input label="Data Fim" formControlName="dataFim" type="date"></app-input>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-4">
+        <app-input label="Observações" formControlName="observacoes"></app-input>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>
