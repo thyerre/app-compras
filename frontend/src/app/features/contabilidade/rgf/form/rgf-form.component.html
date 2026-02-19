@@ -1,0 +1,104 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar RGF' : 'Novo RGF' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Período -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">date_range</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Período</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Exercício" formControlName="exercicio" type="number"></app-input>
+        <app-select label="Quadrimestre" formControlName="quadrimestre" [options]="quadrimestreOptions()"></app-select>
+        <app-select label="Status" formControlName="status" [options]="statusOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Receita -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">monetization_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Receita</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Receita Corrente Líquida" formControlName="receitaCorrenteLiquida" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Despesa com Pessoal -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">people</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Despesa com Pessoal</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Despesa Pessoal Legislativo" formControlName="despesaPessoalLegislativo" type="number"></app-input>
+        <app-input label="Despesa Pessoal Executivo" formControlName="despesaPessoalExecutivo" type="number"></app-input>
+        <app-input label="Despesa Pessoal Total" formControlName="despesaPessoalTotal" type="number"></app-input>
+        <app-input label="% Pessoal Legislativo" formControlName="percentualPessoalLegislativo" type="number"></app-input>
+        <app-input label="% Pessoal Executivo" formControlName="percentualPessoalExecutivo" type="number"></app-input>
+        <app-input label="% Pessoal Total" formControlName="percentualPessoalTotal" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Limites (LRF) -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">warning</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Limites (LRF)</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Limite Prudencial" formControlName="limitePrudencial" type="number"></app-input>
+        <app-input label="Limite Máximo" formControlName="limiteMaximo" type="number"></app-input>
+        <app-input label="Limite de Alerta" formControlName="limiteAlerta" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Dívida e Operações de Crédito -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dívida e Operações de Crédito</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Dívida Consolidada Líquida" formControlName="dividaConsolidadaLiquida" type="number"></app-input>
+        <app-input label="Op. Crédito Internas" formControlName="operacoesCreditoInternas" type="number"></app-input>
+        <app-input label="Op. Crédito Externas" formControlName="operacoesCreditoExternas" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Responsáveis -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">person</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Responsáveis</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Nome do Responsável" formControlName="responsavelNome"></app-input>
+        <app-input label="Cargo do Responsável" formControlName="responsavelCargo"></app-input>
+        <app-input label="Nome do Contador" formControlName="contadorNome"></app-input>
+        <app-input label="CRC do Contador" formControlName="contadorCrc"></app-input>
+      </div>
+    </div>
+
+    <!-- Observações -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Observações" formControlName="observacoes" class="lg:col-span-4"></app-input>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

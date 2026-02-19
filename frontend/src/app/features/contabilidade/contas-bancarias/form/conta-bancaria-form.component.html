@@ -1,0 +1,43 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Conta Bancária' : 'Nova Conta Bancária' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Dados Bancários -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Bancários</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Código do Banco" formControlName="bancoCodigo"></app-input>
+        <app-input label="Nome do Banco" formControlName="bancoNome"></app-input>
+        <app-input label="Agência" formControlName="agencia"></app-input>
+        <app-input label="Nº Conta" formControlName="numeroConta"></app-input>
+        <app-input label="Dígito" formControlName="digito"></app-input>
+      </div>
+    </div>
+
+    <!-- Configuração -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">settings</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Configuração</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Descrição" formControlName="descricao" class="lg:col-span-2"></app-input>
+        <app-select label="Tipo" formControlName="tipo" [options]="tipoOptions()"></app-select>
+        <app-input label="Fonte Recurso (ID)" formControlName="fonteRecursoId" type="number"></app-input>
+        <app-input label="Saldo Atual" formControlName="saldoAtual" type="number"></app-input>
+        <app-select label="Ativo" formControlName="ativo" [options]="ativoOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

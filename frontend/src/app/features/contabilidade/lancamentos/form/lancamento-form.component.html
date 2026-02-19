@@ -1,0 +1,52 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Lançamento' : 'Novo Lançamento' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">receipt_long</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Exercício" formControlName="exercicio" type="number"></app-input>
+        <app-input label="Nº Lançamento" formControlName="numeroLancamento"></app-input>
+        <app-select label="Tipo" formControlName="tipo" [options]="tipoOptions()"></app-select>
+        <app-datepicker label="Data Lançamento" formControlName="dataLancamento"></app-datepicker>
+      </div>
+    </div>
+
+    <!-- Detalhes -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">description</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Detalhes</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Histórico" formControlName="historico" class="lg:col-span-4"></app-input>
+        <app-select label="Origem" formControlName="origem" [options]="origemOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Vinculações (opcional) -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">link</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Vinculações (opcional)</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="ID do Empenho" formControlName="empenhoId" type="number"></app-input>
+        <app-input label="ID da Liquidação" formControlName="liquidacaoId" type="number"></app-input>
+        <app-input label="ID do Pagamento" formControlName="pagamentoId" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,53 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Restos a Pagar' : 'Novo Restos a Pagar' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">history</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Exercício de Origem" formControlName="exercicioOrigem" type="number"></app-input>
+        <app-input label="ID do Empenho" formControlName="empenhoId" type="number"></app-input>
+        <app-select label="Tipo" formControlName="tipo" [options]="tipoOptions()"></app-select>
+        <app-datepicker label="Data de Inscrição" formControlName="dataInscricao"></app-datepicker>
+        <app-select label="Status" formControlName="status" [options]="statusOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Valores -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">payments</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Valores</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Valor Inscrito" formControlName="valorInscrito" type="number"></app-input>
+        <app-input label="Valor Cancelado" formControlName="valorCancelado" type="number"></app-input>
+        <app-input label="Valor Pago" formControlName="valorPago" type="number"></app-input>
+        <app-input label="Valor a Liquidar" formControlName="valorALiquidar" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Observações -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Observações" formControlName="observacoes" class="lg:col-span-4"></app-input>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

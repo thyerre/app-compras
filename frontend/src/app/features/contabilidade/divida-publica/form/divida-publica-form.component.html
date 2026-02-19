@@ -1,0 +1,57 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Dívida Pública' : 'Nova Dívida Pública' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance_wallet</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Tipo" formControlName="tipo" [options]="tipoOptions()"></app-select>
+        <app-input label="Credor" formControlName="credor" class="lg:col-span-2"></app-input>
+        <app-input label="CNPJ do Credor" formControlName="cnpjCredor"></app-input>
+        <app-input label="Nº Contrato" formControlName="numeroContrato"></app-input>
+        <app-datepicker label="Data de Contratação" formControlName="dataContratacao"></app-datepicker>
+        <app-datepicker label="Data de Vencimento" formControlName="dataVencimento"></app-datepicker>
+        <app-input label="Lei Autorizativa" formControlName="leiAutorizativa"></app-input>
+      </div>
+    </div>
+
+    <!-- Valores e Condições -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">payments</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Valores e Condições</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Valor Original" formControlName="valorOriginal" type="number"></app-input>
+        <app-input label="Saldo Devedor" formControlName="saldoDevedor" type="number"></app-input>
+        <app-input label="Taxa de Juros" formControlName="taxaJuros" type="number"></app-input>
+        <app-select label="Indexador" formControlName="indexador" [options]="indexadorOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Detalhes -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Detalhes</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Finalidade" formControlName="finalidade" class="lg:col-span-2"></app-input>
+        <app-select label="Status" formControlName="status" [options]="statusOptions()"></app-select>
+        <app-input label="Observações" formControlName="observacoes" class="lg:col-span-4"></app-input>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

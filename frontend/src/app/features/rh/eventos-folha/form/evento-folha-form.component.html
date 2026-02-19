@@ -1,0 +1,42 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Evento de Folha' : 'Novo Evento de Folha' }}</h1>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">receipt_long</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados do Evento</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Código" formControlName="codigo"></app-input>
+        <app-input label="Descrição" formControlName="descricao" class="lg:col-span-2"></app-input>
+        <app-select label="Tipo" formControlName="tipo" [options]="tipoOptions()"></app-select>
+        <app-select label="Tipo de Cálculo" formControlName="tipoCalculo" [options]="tipoCalculoOptions()"></app-select>
+        <app-input label="Percentual" formControlName="percentual" type="number"></app-input>
+        <app-input label="Valor Fixo" formControlName="valorFixo" type="number"></app-input>
+        <app-select label="Automático" formControlName="automatico" [options]="simNaoOptions()"></app-select>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">settings</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Incidências e Aplicações</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Incidência INSS" formControlName="incidenciaInss" [options]="simNaoOptions()"></app-select>
+        <app-select label="Incidência IRRF" formControlName="incidenciaIrrf" [options]="simNaoOptions()"></app-select>
+        <app-select label="Incidência FGTS" formControlName="incidenciaFgts" [options]="simNaoOptions()"></app-select>
+        <app-select label="Aplica Mensal" formControlName="aplicaMensal" [options]="simNaoOptions()"></app-select>
+        <app-select label="Aplica Férias" formControlName="aplicaFerias" [options]="simNaoOptions()"></app-select>
+        <app-select label="Aplica 13º" formControlName="aplica13" [options]="simNaoOptions()"></app-select>
+        <app-select label="Aplica Rescisão" formControlName="aplicaRescisao" [options]="simNaoOptions()"></app-select>
+        <app-select label="Ativo" formControlName="ativo" [options]="simNaoOptions()"></app-select>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

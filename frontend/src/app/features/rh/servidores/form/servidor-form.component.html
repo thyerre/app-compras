@@ -1,0 +1,111 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Servidor' : 'Novo Servidor' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Dados Pessoais -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">person</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Pessoais</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Matrícula" formControlName="matricula"></app-input>
+        <app-input label="Nome Completo" formControlName="nome" class="lg:col-span-2"></app-input>
+        <app-input label="CPF" formControlName="cpf"></app-input>
+        <app-input label="RG" formControlName="rg"></app-input>
+        <app-input label="Órgão Emissor" formControlName="rgOrgaoEmissor"></app-input>
+        <app-input label="Data Nascimento" formControlName="dataNascimento" type="date"></app-input>
+        <app-select label="Sexo" formControlName="sexo" [options]="sexoOptions()"></app-select>
+        <app-select label="Estado Civil" formControlName="estadoCivil" [options]="estadoCivilOptions()"></app-select>
+        <app-input label="Naturalidade" formControlName="naturalidade"></app-input>
+        <app-input label="Nacionalidade" formControlName="nacionalidade"></app-input>
+        <app-input label="E-mail" formControlName="email" type="email"></app-input>
+        <app-input label="Telefone" formControlName="telefone"></app-input>
+        <app-input label="Celular" formControlName="celular"></app-input>
+        <app-select label="Grau de Instrução" formControlName="grauInstrucao" [options]="grauInstrucaoOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Endereço -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">location_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Endereço</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="CEP" formControlName="cep"></app-input>
+        <app-input label="Logradouro" formControlName="logradouro" class="lg:col-span-2"></app-input>
+        <app-input label="Número" formControlName="numero"></app-input>
+        <app-input label="Complemento" formControlName="complemento"></app-input>
+        <app-input label="Bairro" formControlName="bairro"></app-input>
+        <app-input label="Município (ID)" formControlName="municipioId" type="number"></app-input>
+        <app-input label="Estado (ID)" formControlName="estadoId" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Documentos -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">badge</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Documentos</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="PIS/PASEP" formControlName="pisPasep"></app-input>
+        <app-input label="CTPS Número" formControlName="ctpsNumero"></app-input>
+        <app-input label="CTPS Série" formControlName="ctpsSerie"></app-input>
+        <app-input label="CNH Número" formControlName="cnhNumero"></app-input>
+        <app-input label="CNH Categoria" formControlName="cnhCategoria"></app-input>
+        <app-input label="Título de Eleitor" formControlName="tituloEleitor"></app-input>
+        <app-input label="Zona Eleitoral" formControlName="zonaEleitoral"></app-input>
+        <app-input label="Seção Eleitoral" formControlName="secaoEleitoral"></app-input>
+      </div>
+    </div>
+
+    <!-- Dados Funcionais -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">work</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Funcionais</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Cargo" formControlName="cargoId" [options]="cargoOptions()"></app-select>
+        <app-input label="Nível Salarial (ID)" formControlName="nivelSalarialId" type="number"></app-input>
+        <app-select label="Tipo de Vínculo" formControlName="tipoVinculoId" [options]="tipoVinculoOptions()"></app-select>
+        <app-select label="Situação" formControlName="situacao" [options]="situacaoOptions()"></app-select>
+        <app-input label="Data de Admissão" formControlName="dataAdmissao" type="date"></app-input>
+        <app-input label="Data da Posse" formControlName="dataPosse" type="date"></app-input>
+        <app-input label="Data de Exercício" formControlName="dataExercicio" type="date"></app-input>
+        <app-input label="Regime Previdência" formControlName="regimePrevidencia"></app-input>
+        <app-input label="Nº Previdência" formControlName="numeroPrevidencia"></app-input>
+      </div>
+    </div>
+
+    <!-- Dados Bancários -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados Bancários</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Código Banco" formControlName="bancoCodigo"></app-input>
+        <app-input label="Banco" formControlName="bancoNome"></app-input>
+        <app-input label="Agência" formControlName="agencia"></app-input>
+        <app-input label="Conta" formControlName="conta"></app-input>
+        <app-select label="Tipo de Conta" formControlName="tipoConta" [options]="tipoContaOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Observações -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <app-input label="Observações" formControlName="observacoes"></app-input>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

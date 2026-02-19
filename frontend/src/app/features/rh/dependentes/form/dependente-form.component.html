@@ -1,0 +1,41 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Dependente' : 'Novo Dependente' }}</h1>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">family_restroom</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados do Dependente</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Servidor" formControlName="servidorId" [options]="servidorOptions()"></app-select>
+        <app-input label="Nome" formControlName="nome" class="lg:col-span-2"></app-input>
+        <app-input label="CPF" formControlName="cpf"></app-input>
+        <app-input label="Data de Nascimento" formControlName="dataNascimento" type="date"></app-input>
+        <app-select label="Parentesco" formControlName="parentesco" [options]="parentescoOptions()"></app-select>
+        <app-select label="Sexo" formControlName="sexo" [options]="sexoOptions()"></app-select>
+        <app-select label="Ativo" formControlName="ativo" [options]="ativoOptions()"></app-select>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">account_balance</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Informações Complementares</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Dependente IR" formControlName="dependenteIr" [options]="simNaoOptions()"></app-select>
+        <app-select label="Dep. Salário Família" formControlName="dependenteSalarioFamilia" [options]="simNaoOptions()"></app-select>
+        <app-select label="Dep. Plano Saúde" formControlName="dependentePlanoSaude" [options]="simNaoOptions()"></app-select>
+        <app-select label="Pensão Alimentícia" formControlName="pensaoAlimenticia" [options]="simNaoOptions()"></app-select>
+        <app-input label="% Pensão" formControlName="percentualPensao" type="number"></app-input>
+        <app-input label="Início Dependência" formControlName="dataInicioDependencia" type="date"></app-input>
+        <app-input label="Fim Dependência" formControlName="dataFimDependencia" type="date"></app-input>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

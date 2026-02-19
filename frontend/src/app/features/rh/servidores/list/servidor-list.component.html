@@ -1,0 +1,23 @@
+<div class="list-page">
+  <div class="page-header flex flex-row justify-between gap-2 mb-4">
+    <h1>Servidores</h1>
+    <app-button label="Novo Servidor" icon="add" color="primary" variant="raised" (clicked)="onAdd()"></app-button>
+  </div>
+
+  <app-filter [fields]="filterFields()" (search)="onFilterSearch($event)" (clear)="onFilterClear()"></app-filter>
+
+  <div class="table-container">
+    <app-data-table
+      [columns]="columns"
+      [data]="items()"
+      [totalElements]="totalElements()"
+      [pageSize]="pageSize()"
+      [pageIndex]="pageIndex()"
+      [loading]="loading()"
+      [showViewAction]="false"
+      (pageChange)="onPageChange($event)"
+      (edit)="onEditItem($event)"
+      (remove)="onDeleteItem($event)">
+    </app-data-table>
+  </div>
+</div>

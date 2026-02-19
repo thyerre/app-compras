@@ -1,0 +1,9 @@
+<div class="list-page">
+  <div class="page-header flex flex-row justify-between gap-2 mb-4">
+    <h1>Balancetes</h1>
+  </div>
+  <app-filter [fields]="filterFields()" (search)="onFilterSearch($event)" (clear)="onFilterClear()"></app-filter>
+  <div class="table-container">
+    <app-data-table [columns]="columns" [data]="items()" [totalElements]="totalElements()" [pageSize]="pageSize()" [pageIndex]="pageIndex()" [loading]="loading()" [showActions]="false" (pageChange)="onPageChange($event)"></app-data-table>
+  </div>
+</div>

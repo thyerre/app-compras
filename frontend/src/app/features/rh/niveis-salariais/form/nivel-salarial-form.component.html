@@ -1,0 +1,27 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Nível Salarial' : 'Novo Nível Salarial' }}</h1>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">trending_up</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados do Nível Salarial</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Cargo" formControlName="cargoId" [options]="cargoOptions()"></app-select>
+        <app-input label="Nível" formControlName="nivel"></app-input>
+        <app-input label="Classe" formControlName="classe"></app-input>
+        <app-input label="Referência" formControlName="referencia"></app-input>
+        <app-input label="Valor Base" formControlName="valorBase" type="number"></app-input>
+        <app-input label="Vigência Início" formControlName="vigenciaInicio" type="date"></app-input>
+        <app-input label="Vigência Fim" formControlName="vigenciaFim" type="date"></app-input>
+        <app-select label="Ativo" formControlName="ativo" [options]="ativoOptions()"></app-select>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

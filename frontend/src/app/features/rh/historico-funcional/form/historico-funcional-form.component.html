@@ -1,0 +1,49 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Registro' : 'Novo Registro' }}</h1>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">history</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Dados do Evento</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Servidor" formControlName="servidorId" [options]="servidorOptions()" class="lg:col-span-2"></app-select>
+        <app-input label="Tipo de Evento" formControlName="tipoEvento"></app-input>
+        <app-input label="Data do Evento" formControlName="dataEvento" type="date"></app-input>
+        <app-input label="Nº do Ato" formControlName="numeroAto"></app-input>
+        <app-input label="Descrição" formControlName="descricao" class="lg:col-span-3"></app-input>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">swap_horiz</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Alterações</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Cargo Anterior" formControlName="cargoAnteriorId" [options]="cargoOptions()"></app-select>
+        <app-select label="Cargo Novo" formControlName="cargoNovoId" [options]="cargoOptions()"></app-select>
+        <app-input label="Salário Anterior" formControlName="salarioAnterior" type="number"></app-input>
+        <app-input label="Salário Novo" formControlName="salarioNovo" type="number"></app-input>
+        <app-select label="Órgão Anterior" formControlName="orgaoAnteriorId" [options]="orgaoOptions()"></app-select>
+        <app-select label="Órgão Novo" formControlName="orgaoNovoId" [options]="orgaoOptions()"></app-select>
+        <app-select label="Unidade Anterior" formControlName="unidadeAnteriorId" [options]="unidadeOptions()"></app-select>
+        <app-select label="Unidade Nova" formControlName="unidadeNovoId" [options]="unidadeOptions()"></app-select>
+      </div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+      </div>
+      <div class="grid grid-cols-1 gap-4">
+        <app-input label="Observações" formControlName="observacoes"></app-input>
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

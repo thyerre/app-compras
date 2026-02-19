@@ -1,0 +1,85 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Bem Patrimonial' : 'Novo Bem Patrimonial' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">inventory_2</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Nº Patrimônio" formControlName="numeroPatrimonio"></app-input>
+        <app-input label="Descrição" formControlName="descricao" class="lg:col-span-2"></app-input>
+        <app-select label="Tipo" formControlName="tipo" [options]="tipoOptions()"></app-select>
+        <app-datepicker label="Data de Aquisição" formControlName="dataAquisicao"></app-datepicker>
+      </div>
+    </div>
+
+    <!-- Vinculações -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">business</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Vinculações</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="ID do Órgão" formControlName="orgaoId" type="number"></app-input>
+        <app-input label="ID da Unidade" formControlName="unidadeId" type="number"></app-input>
+        <app-input label="ID do Fornecedor" formControlName="fornecedorId" type="number"></app-input>
+        <app-input label="ID do Empenho" formControlName="empenhoId" type="number"></app-input>
+        <app-input label="ID do Plano de Contas" formControlName="planoContaId" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Depreciação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">trending_down</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Depreciação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Valor Original" formControlName="valorOriginal" type="number"></app-input>
+        <app-input label="Valor Atual" formControlName="valorAtual" type="number"></app-input>
+        <app-input label="Vida Útil (Anos)" formControlName="vidaUtilAnos" type="number"></app-input>
+        <app-input label="Valor Residual" formControlName="valorResidual" type="number"></app-input>
+        <app-input label="Depreciação Acumulada" formControlName="depreciacaoAcumulada" type="number"></app-input>
+        <app-select label="Método de Depreciação" formControlName="metodoDepreciacao" [options]="metodoDepreciacaoOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Localização e Estado -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">location_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Localização e Estado</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-select label="Estado de Conservação" formControlName="estadoConservacao" [options]="estadoConservacaoOptions()"></app-select>
+        <app-input label="Localização" formControlName="localizacao" class="lg:col-span-2"></app-input>
+        <app-input label="Responsável" formControlName="responsavel"></app-input>
+        <app-select label="Situação" formControlName="situacao" [options]="situacaoOptions()"></app-select>
+      </div>
+    </div>
+
+    <!-- Observações -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">notes</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Observações</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-datepicker label="Data de Baixa" formControlName="dataBaixa"></app-datepicker>
+        <app-input label="Motivo da Baixa" formControlName="motivoBaixa" class="lg:col-span-2"></app-input>
+        <app-input label="Observações" formControlName="observacoes" class="lg:col-span-4"></app-input>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>

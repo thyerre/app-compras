@@ -1,0 +1,46 @@
+<div class="form-page px-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-semibold text-gray-800 m-0">{{ isEditMode() ? 'Editar Receita' : 'Nova Receita' }}</h1>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+    <!-- Identificação -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">monetization_on</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Identificação</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Exercício" formControlName="exercicio" type="number"></app-input>
+        <app-input label="Código da Receita" formControlName="codigoReceita"></app-input>
+        <app-input label="Descrição" formControlName="descricao" class="lg:col-span-2"></app-input>
+        <app-input label="ID da LOA" formControlName="loaId" type="number"></app-input>
+        <app-select label="Categoria Econômica" formControlName="categoriaEconomica" [options]="categoriaEconomicaOptions()"></app-select>
+        <app-input label="Origem" formControlName="origem"></app-input>
+        <app-input label="Espécie" formControlName="especie"></app-input>
+        <app-input label="ID Fonte de Recurso" formControlName="fonteRecursoId" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Valores -->
+    <div class="bg-white rounded-lg border border-gray-200 p-5">
+      <div class="flex items-center gap-2 mb-4">
+        <mat-icon class="text-gray-500">payments</mat-icon>
+        <h2 class="text-base font-semibold text-gray-700 m-0">Valores</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <app-input label="Valor Previsto Inicial" formControlName="valorPrevistoInicial" type="number"></app-input>
+        <app-input label="Valor Previsto Atualizado" formControlName="valorPrevistoAtualizado" type="number"></app-input>
+        <app-input label="Valor Lançado" formControlName="valorLancado" type="number"></app-input>
+        <app-input label="Valor Arrecadado" formControlName="valorArrecadado" type="number"></app-input>
+        <app-input label="Valor Recolhido" formControlName="valorRecolhido" type="number"></app-input>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end gap-3 py-4">
+      <app-button label="Cancelar" variant="stroked" type="button" (clicked)="onCancel()"></app-button>
+      <app-button label="Salvar" variant="raised" color="primary" type="submit" [disabled]="saving()"></app-button>
+    </div>
+  </form>
+</div>
